@@ -1,4 +1,69 @@
 <%- include("./partials/header.ejs")%>
-    
-</body>
+
+    <div class="user-main">
+      <header>
+        <h1>Manage Users</h1>
+        <a onclick="openModal()">+</a>
+      </header>
+
+      <div class="user-table">
+        <table>
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Email</td>
+              <td>Manage</td>
+            </tr>
+          </thead>
+          <tbody>
+
+            <% users.forEach(function(user){ %>
+              <tr id="<%= user._id%>">
+                <td class="dp">
+                  <% if (user.avatar){%>
+                    <img src="./uploads/avatars/<%= user.avatar %>" alt="">
+                    <% }else{%>
+                  <img src="./images/nophoto.png" alt="" />
+                  <% } %>
+                  <span><%= user.name %></span>
+                </td>
+                <td><%= user.email %></td>
+                <td><img src="./images/trash.png" alt="Delete" onclick="deleteUser('<%= user._id %>')"/></td>
+              </tr>
+              <%})%>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal -->
+<%-include("./partials/userModal.ejs") %>
+
+<script>
+  const deleteToast = Toastify({
+    text:"User was deleted succesfully!",
+    duration:3000
+  })
+
+  const deleteErrorToast = Toastify({
+    text:"Could not delete the user!",
+    duration:3000
+  })
+
+  async function deleteUser(userId){
+    const response = await fetch("/user/"+userId,{
+      method:"Delete"
+    })
+    const result = await response.json()
+
+    if(result.errors){
+      deleteErrorToast.showToast()
+    }else{
+      deleteToast.showToast()
+      document.getElementById(userId).remove()
+    }
+  }
+</script>
+  </body>
 </html>

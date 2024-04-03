@@ -17,19 +17,20 @@ const loginRouter = require("./routes/loginRouter");
 const app = express();
 dotenv.config();
 
-// Request parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // Server connection
 mongoose
-  .connect(process.env.DATABASE_CONNECTION_STRING)
-  .then(() => {
-    console.log("Database connection successful");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+.connect(process.env.DATABASE_CONNECTION_STRING)
+.then(() => {
+  console.log("Database connection successful");
+})
+.catch((err) => {
+  console.log(err);
+});
+
+// Request parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Set veiw engine
 app.set("view engine", "ejs");
