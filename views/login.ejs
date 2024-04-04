@@ -9,15 +9,23 @@
           <h1>Login - Chat App</h1>
         </div>
 
-        <form action="">
+        <form action="/" method="post">
           <div class="input">
-            <input placeholder="Enter your username" type="text" />
-            <p class="error">invalid field</p>
+            <input placeholder="Enter your username" type="text" name="username" value="<%= data.username %>" />
+            <% if(errors.username){%>
+            <p class="error"><%= errors.username.msg %></p>
+            <% } %>
           </div>
 
           <div class="input">
-            <input placeholder="Enter your password" type="password" />
-            <p class="error">invalid field</p>
+            <input placeholder="Enter your password" type="password" name="password"/>
+            <% if(errors.password){%>
+              <p class="error"><%= errors.password.msg %></p>
+              <% } %>
+
+            <% if(errors.common){%>
+              <p class="error"><%= errors.common.msg %></p>
+              <% } %>
           </div>
 
           <button type="submit">Submit</button>

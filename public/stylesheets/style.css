@@ -644,3 +644,6 @@ body {
 input.input-error {
 border: 1px solid var(--red);
 }
+.show{
+    display: block;
+}

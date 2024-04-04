@@ -10,8 +10,35 @@
     <title><%=title %></title>
   </head>
   <body>
+    <% if(loggedInUser && loggedInUser.name){ %>
+    <div class="menu">
+      <a href="/inbox">Inbox</a>
+      <a href="/user">User</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </div>
+    <% }else{ %>
     <div class="menu">
       <a href="/inbox">Inbox</a>
       <a href="/user">User</a>
       <a href="/">Login</a>
     </div>
+    <% } %>
+    <script>
+      const toast = Toastify({
+        text: "You are being logged out",
+        duration: 3000,
+      });
+
+      const logout = function () {
+        fetch("/", {
+          method: "DELETE",
+        });
+        toast.showToast();
+        console.log("ishduk");
+        setTimeout(()=>{
+          window.location.replace("/")
+        },1000)
+      };
+    </script>
+  </body>
+</html>
