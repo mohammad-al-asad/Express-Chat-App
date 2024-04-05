@@ -11,7 +11,11 @@
       </div>
 
       <div class="dp-list">
-        <div class="dp active">
+
+        <div class="no-conversation">
+          <img src="./images/no-conversation (1).svg" alt="No conversation">
+        </div>
+        <!-- <div class="dp active">
           <img src="./images/user1.png" alt="Asad" />
           <div class="title">
             <div class="name">
@@ -31,12 +35,16 @@
             </div>
             <p class="msg">This is message</p>
           </div>
-        </div>
+        </div> -->
+
       </div>
 
       <div class="msg-body">
+        <div class="no-message">
+          <h2>Select a conversation</h2>
+        </div>
 
-        <div class=" message-box your-msg">
+        <!-- <div class=" message-box your-msg">
           <div class="message">See you later</div>
           <div class="date">Mar 14</div>
         </div>
@@ -47,16 +55,19 @@
               <div class="message">Ok bye</div>
               <div class="date">Mar 14</div>
             </div>
-          </div>
+          </div> -->
 
         </div>
 
-      <div class="nothing"></div>
+      <div class="nothing">
+        <a onclick="openModal()">+</a>
+      </div>
 
       <div class="new-msg">
         <img src="./images/attachment.png" alt="" />
         <input type="text" placeholder="Type a message" />
       </div>
     </div>
+    <%- include("./partials/inboxModal.ejs") %>
   </body>
 </html>

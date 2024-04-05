@@ -1,0 +1,110 @@
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <a onclick="closeModal()">+</a>
+
+    <div class="modal-title">
+      <h2>Create New conversation</h2>
+    </div>
+
+    <div class="modal-body">
+      <form id="add-conversation-form">
+        <input
+          id="input"
+          placeholder="Search user by name / email / mobile"
+          type="text"
+          name="name"
+        />
+        <p class="error"></p>
+
+        <div id="userPlaceholder">
+          <!-- <ul class="search-users">
+            <li>
+              <div class="user">
+                <div class="img">
+                  <img width="100%" src="./images/nophoto.png" alt="" />
+                </div>
+                <h1 class="name">User-1</h1>
+              </div>
+            </li>
+            <li>
+              <div class="user">
+                <div class="img">
+                  <img width="100%" src="./images/nophoto.png" alt="" />
+                </div>
+                <h1 class="name">User-1</h1>
+              </div>
+            </li>
+          </ul> -->
+        </div>
+
+        <!-- <button type="submit">Submit</button> -->
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  const modal = document.getElementById("modal-bg");
+  const input = document.getElementById("input");
+  const error = document.querySelector(".error");
+  const userPlaceholder = document.getElementById("userPlaceholder");
+  function openModal() {
+    modal.style.display = "grid";
+  }
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  //Search users for conversation
+  let timer;
+  input.addEventListener("keyup", () => {
+    clearInterval(timer);
+    userPlaceholder.innerHTML = "";
+    error.style.display = "none";
+
+    if (input.value) {
+      timer = setTimeout(searchUsers, 500);
+    }
+  });
+
+  async function searchUsers() {
+    const response = await fetch("/inbox/search", {
+      method: "POST",
+      body: JSON.stringify({
+        user: input.value,
+      }),
+
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+
+    const result = await response.json();
+    if (result.errors) {
+      error.innerText = result.errors.common.msg;
+      error.style.display = "block";
+    } else {
+      if (result.length > 0) {
+        error.style.display = "none";
+
+        let generatedHtml = `<ul class="search-users"`;
+
+        result.forEach((user) => {
+          const avatar = user.avatar
+            ? `./uploads/avatars/${user.avatar}`
+            : `./images/nophoto.png`;
+          generatedHtml += `<li>
+              <div class="user">
+                <div class="img">
+                  <img width="100%" src="${avatar}" alt="" />
+                </div>
+                <h1 class="name">${user.name}</h1>
+              </div>
+            </li>`;
+        });
+        generatedHtml += `</ul>`;
+        userPlaceholder.innerHTML = generatedHtml;
+      }
+
+    }
+  }
+</script>
