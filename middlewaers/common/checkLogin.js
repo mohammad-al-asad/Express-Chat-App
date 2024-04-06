@@ -8,6 +8,7 @@ function checkLogin(req, res, next) {
       const cookie = cookies[process.env.COOkIE_NAME];
 
       const decoded = jwt.verify(cookie, process.env.JWT_SECRET);
+      req.loggedInUser = decoded;
 
       if (res.locals.html) {
         res.locals.loggedInUser = decoded;

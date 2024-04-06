@@ -47,6 +47,8 @@
   const input = document.getElementById("input");
   const error = document.querySelector(".error");
   const userPlaceholder = document.getElementById("userPlaceholder");
+  let conversationFailureToast;
+
   function openModal() {
     modal.style.display = "grid";
   }
@@ -86,16 +88,16 @@
       if (result.length > 0) {
         error.style.display = "none";
 
-        let generatedHtml = `<ul class="search-users"`;
+        let generatedHtml = `<ul class="search-users">`;
 
         result.forEach((user) => {
           const avatar = user.avatar
             ? `./uploads/avatars/${user.avatar}`
             : `./images/nophoto.png`;
-          generatedHtml += `<li>
+          generatedHtml += `<li onclick="createConversation('${user._id}', '${user.name}',' ${avatar}')">
               <div class="user">
                 <div class="img">
-                  <img width="100%" src="${avatar}" alt="" />
+                  <img width="100%" src="${avatar}" alt="DP" />
                 </div>
                 <h1 class="name">${user.name}</h1>
               </div>
@@ -104,7 +106,43 @@
         generatedHtml += `</ul>`;
         userPlaceholder.innerHTML = generatedHtml;
       }
-
     }
   }
+
+  // Create conversation
+  async function createConversation(id, name, avatar) {
+    try {
+      const response = await fetch("inbox/conversation", {
+        method: "POST",
+        body: JSON.stringify({
+          participant: {
+            name,
+            id,
+            avatar,
+          },
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+
+      const result = await response.json();
+
+      if (!result.errors) {
+        setInterval(() => {
+          location.reload();
+        }, 1000);
+      } else {
+        throw new Error(result.errors.common.msg);
+      }
+    } catch (err) {
+      conversationFailureToast = Toastify({
+        text: err.message,
+        duration: 2000,
+      });
+      conversationFailureToast.showToast();
+    }
+  }
+
+
 </script>

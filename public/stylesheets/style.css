@@ -416,6 +416,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1px;
+    overflow: auto;
 }
 
 .dp-list .no-conversation {
@@ -459,7 +460,7 @@ body {
 
 .dp-list .dp .title p {
     color: #a1a1a1;
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .dp-list .dp .title .msg {
@@ -495,9 +496,10 @@ body {
     justify-content: flex-end;
     color: var(--light);
 }
-.msg-body .no-message{
+
+.msg-body .no-message {
     opacity: 40%;
-margin: auto auto;
+    margin: auto auto;
 }
 
 .msg-body .message {
@@ -555,9 +557,12 @@ margin: auto auto;
     padding: 15px;
 }
 
-.new-msg {
+.new-msg{
     grid-area: "new-msg";
     background-color: var(--tertiary);
+}
+.new-msg form{
+    height: 100%;
     padding: 0 20px 0 5px;
     display: flex;
     justify-content: space-between;
@@ -581,6 +586,10 @@ margin: auto auto;
     border: 3px solid var(--secondary);
 }
 
+/* #add-conversation-form input {
+    auto-com
+} */
+
 .search-users {
     width: 330px;
     background-color: var(--secondary);
@@ -591,22 +600,25 @@ margin: auto auto;
     padding: 8px;
     right: 31px;
 }
-.search-users .user{
+
+.search-users .user {
     display: flex;
     align-items: center;
     gap: 8px;
-    border-radius:8px;
+    border-radius: 8px;
     background-color: var(--primary);
     padding: 6px;
 }
-.search-users li:not(:last-of-type){
-margin-bottom: 8px;
+
+.search-users li:not(:last-of-type) {
+    margin-bottom: 8px;
 }
-.search-users .user .name{
+
+.search-users .user .name {
     font-size: 10px;
 }
 
-.search-users img{
+.search-users img {
     width: 20px;
     height: 20px;
     border: 2px solid var(--blue);
@@ -634,6 +646,7 @@ margin-bottom: 8px;
     .msg-body .your-msg {
         width: 60%;
     }
+
     .msg-body .no-message {
         font-size: 11px;
     }
@@ -711,4 +724,7 @@ input.input-error {
 
 .show {
     display: block;
+}
+.hide {
+    display: none;
 }

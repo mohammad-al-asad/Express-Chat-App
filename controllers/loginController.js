@@ -20,6 +20,7 @@ async function login(req, res, next) {
       );
       if (isValidPassword) {
         const userObj = {
+          id: user._id,
           name: user.name,
           number: user.number,
           email: user.email,
@@ -59,12 +60,11 @@ async function login(req, res, next) {
 
 function logout(req, res, next) {
   res.clearCookie(process.env.COOKIE_NAME);
-  res.send("Logged out")
-
+  res.send("Logged out");
 }
 
 module.exports = {
   getLogin,
   login,
-  logout
+  logout,
 };

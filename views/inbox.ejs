@@ -12,9 +12,14 @@
 
       <div class="dp-list">
 
+        <% if(conversations && conversations.length===0){ %>
         <div class="no-conversation">
           <img src="./images/no-conversation (1).svg" alt="No conversation">
         </div>
+        <% }else{ %>
+        <% conversations.forEach(function(conversation){ %>
+        <% if(conversation.creator.id==loggedInUser.id){ %>
+
         <!-- <div class="dp active">
           <img src="./images/user1.png" alt="Asad" />
           <div class="title">
@@ -24,18 +29,46 @@
             </div>
             <p class="msg">This is message</p>
           </div>
-        </div>
+        </div> -->
 
-        <div class="dp">
-          <img src="./images/user2.png" alt="Asad" />
+        <div class="dp" onclick="getMessages('<%= conversation._id %>')">
+          <% if(conversation.participant.avatar){ %>
+          <img src="<%= conversation.participant.avatar %>" alt="<%= conversation.participant.name %>" />
+          <% }else{ %>
+          <img src="./images/nophoto.png" alt="<%= conversation.participant.name %>" />
+          <% } %>
+
           <div class="title">
             <div class="name">
-              <h4>Ms. Girl</h4>
-              <p>Apr 24</p>
+              <h4><%= conversation.participant.name %></h4>
+              <p><%= moment(conversation.lastUpdated).fromNow() %></p>
             </div>
-            <p class="msg">This is message</p>
+            <p class="msg">Click to see messages</p>
           </div>
-        </div> -->
+        </div>
+
+        <% }else{ %>
+
+          <div class="dp" onclick="getMessages('<%= conversation._id %>')">
+            <% if(conversation.creator.avatar){ %>
+            <img src="./uploads/avatars/<%= conversation.creator.avatar %>" alt="<%= conversation.creator.name %>" />
+            <% }else{ %>
+            <img src="./images/nophoto.png" alt="<%= conversation.creator.name %>" />
+            <% } %>
+  
+            <div class="title">
+              <div class="name">
+                <h4><%= conversation.creator.name %></h4>
+                <p><%= moment(conversation.lastUpdated).fromNow() %></p>
+              </div>
+              <p class="msg">Click to see messages</p>
+            </div>
+          </div>
+
+        <% } %>
+          <% }) %>
+          <% } %>
+
 
       </div>
 
@@ -64,10 +97,37 @@
       </div>
 
       <div class="new-msg">
-        <img src="./images/attachment.png" alt="" />
+        
+        <form id="msg-form" action="">
+          <label for="attachment"><img src="./images/attachment.png" alt="Files" /></label>
+          <input type="file" multiple name="attachment" class="hide" id="attachment">
         <input type="text" placeholder="Type a message" />
+        </form>
       </div>
     </div>
     <%- include("./partials/inboxModal.ejs") %>
+
+    <script>
+const form = document.getElementById("msg-form")
+console.log(con);
+      
+// Get messages
+  async function getMessages(conversationId){
+    const response = fetch("/messages");
+
+  } 
+
+  // Send message
+
+  form.onsubmit = async function (){
+    const response = await fetch("/message",{
+      method:"POST",
+    })
+  }
+
+
+  
+  
+    </script>
   </body>
 </html>
