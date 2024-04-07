@@ -549,6 +549,21 @@ body {
     background-color: var(--green);
 }
 
+.msg-body .attachment {
+    width: 50px;
+    display: flex;
+    gap: 14px;
+    position: relative;
+    margin-top: 3px;
+}
+
+.msg-body .attachment img {
+    opacity: 100%;
+    border: 1px solid var(--secondary);
+    border-radius: 10%;
+    width: 100%;
+}
+
 .nothing {
     grid-area: "nothing";
     background-color: var(--primary);
@@ -557,11 +572,12 @@ body {
     padding: 15px;
 }
 
-.new-msg{
+.new-msg {
     grid-area: "new-msg";
     background-color: var(--tertiary);
 }
-.new-msg form{
+
+.new-msg form {
     height: 100%;
     padding: 0 20px 0 5px;
     display: flex;
@@ -725,6 +741,11 @@ input.input-error {
 .show {
     display: block;
 }
+
 .hide {
     display: none;
+}
+
+#msg-form {
+    visibility: hidden;
 }

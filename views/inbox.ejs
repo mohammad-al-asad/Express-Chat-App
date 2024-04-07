@@ -6,7 +6,7 @@
       </div>
 
       <div class="msg-head">
-        <h2>M.A. Asad</h2>
+        <h2 id="msg-head"></h2>
         <img src="./images/trash.png" alt="Delete" />
       </div>
 
@@ -98,35 +98,111 @@
 
       <div class="new-msg">
         
-        <form id="msg-form" action="">
+        <form id="msg-form">
           <label for="attachment"><img src="./images/attachment.png" alt="Files" /></label>
           <input type="file" multiple name="attachment" class="hide" id="attachment">
-        <input type="text" placeholder="Type a message" />
+          <input type="text" name="message" placeholder="Type a message" />
         </form>
       </div>
     </div>
     <%- include("./partials/inboxModal.ejs") %>
 
     <script>
-const form = document.getElementById("msg-form")
-console.log(con);
+    const form = document.getElementById("msg-form")
+    const msgHead = document.getElementById("msg-head")
+    const msgBody = document.querySelector(".msg-body")
+
       
-// Get messages
-  async function getMessages(conversationId){
-    const response = fetch("/messages");
+    // Get messages
+      async function getMessages(conversationId){
 
-  } 
+        const response = await fetch(`/inbox/messages/${conversationId}`)
 
-  // Send message
+        const result = await response.json()
+        const {participant,loggedInUser,data} = result;
 
-  form.onsubmit = async function (){
-    const response = await fetch("/message",{
-      method:"POST",
-    })
-  }
 
+        if(data.messages&&data.messages.length>0){
+          let allmessages = '';
+          data.messages.forEach(message => {
+            
+            const senderAvatar = message.sender.avatar ? `<img src="../uploads/avatars/${message.sender.avatar}"/>` : `<img src="../images/nophoto.png"/>`
+            const showAvatar = message.sender.id == loggedInUser.id? '' : senderAvatar;
+            const messageClass = message.sender.id == loggedInUser.id? `your-msg` : `others-msg`;
+
+            let showAttachment;
+            if(message.attachment&&message.attachment.length>0){
+              showAttachment = `<div class="attachment">`
+                message.attachment.forEach(element=>{
+                  showAttachment+=`<img src="../uploads/attachments/${element}"/>`
+                })
+                showAttachment+= `</div>`
+            }
+
+            let oneMessage = `
+          <div class="${messageClass}">
+            ${showAvatar}
+            <div class="message-box">
+              <div class="message">${message.text}${showAttachment?showAttachment:''}</div>
+              <div class="date">${moment(message.time).fromNow()}</div>
+              
+            </div>
+          </div>`
+
+          allmessages+=oneMessage;
+          });
+
+          msgBody.innerHTML = allmessages;
+
+        }
+
+        if(!result.errors&&result.participant){
+          msgHead.innerText=participant.name
+          form.style.visibility ="visible"
+        }else{
+
+          const messageGetFailureToast = Toastify({
+              text:result.errors.common.msg,
+              duration:1500
+            })
+            messageGetFailureToast.showToast();
+        }
+
+        // Send message of form 
+        form.onsubmit = async function (e){
+          e.preventDefault();
+  
+          
+          const formData = new FormData(form);
+          formData.append('receiverId', participant.id);
+          formData.append('receiverName', participant.name);
+          formData.append('avatar', participant.avatar || '');
+          formData.append('conversationId', conversationId);
 
   
+          let response = await fetch("/inbox/message", {
+          method: "POST",
+          body:formData
+        });
+  
+          const result = await response.json()
+
+
+          if(!result.errors&&result.data){
+            const messageSentToast = Toastify({
+              text:result.message,
+              duration:1000
+            })
+            messageSentToast.showToast()
+          }else{
+            const messageSendFailureToast = Toastify({
+              text:result.errors.common.msg,
+              duration:1500
+            })
+            messageSendFailureToast.showToast();
+          }
+        }
+      }
   
     </script>
   </body>

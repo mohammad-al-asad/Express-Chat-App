@@ -1,5 +1,6 @@
 const model = require("../model/people");
 const conversationModel = require("../model/conversation");
+const messageModel = require("../model/message");
 const escape = require("../utilities/escape");
 const createError = require("http-errors");
 const moment = require("moment");
@@ -116,8 +117,92 @@ async function createConversation(req, res, next) {
   }
 }
 
+async function sendMessage(req, res, next) {
+  try {
+    const messages = await messageModel
+      .find({
+        conversationId: req.params.conversationId,
+      })
+      .sort("-createdAt");
+
+    const { participant } = await conversationModel.findById({
+      _id: req.params.conversationId,
+    });
+
+    res.status(200).json({
+      data: { messages: messages },
+      participant,
+      loggedInUser: req.loggedInUser,
+    });
+  } catch (err) {
+    res.status(500).json({
+      errors: {
+        common: {
+          msg: err.message,
+        },
+      },
+    });
+    console.log("messages");
+  }
+}
+
+async function getMessage(req, res, next) {
+  if (req.body.message || (req.files && req.files.length > 0)) {
+    try {
+      const attachments = [];
+      if (req.files && req.files.length > 0) {
+        req.files.forEach((attachment) => {
+          attachments.push(attachment.filename);
+        });
+      }
+
+      const message = new messageModel({
+        text: req.body.message,
+
+        attachment: attachments,
+
+        sender: {
+          name: req.loggedInUser.name,
+          id: req.loggedInUser.id,
+          avatar: req.loggedInUser.avatar || null,
+        },
+        receiver: {
+          name: req.body.receiverName,
+          id: req.body.receiverId,
+          avatar: req.body.avatar || null,
+        },
+        conversationId: req.body.conversationId,
+      });
+
+      const result = await message.save();
+      res.status(200).json({
+        message: "Message sent",
+        data: result,
+      });
+    } catch (err) {
+      res.status(500).json({
+        errors: {
+          common: {
+            msg: err.message,
+          },
+        },
+      });
+    }
+  } else {
+    res.status(403).json({
+      errors: {
+        common: {
+          msg: "Atleast one field nedded",
+        },
+      },
+    });
+  }
+}
+
 module.exports = {
   getInbox,
   searchUsers,
   createConversation,
+  sendMessage,
+  getMessage,
 };
