@@ -147,10 +147,22 @@ body {
     border-radius: 5px;
     font-size: 15px;
     transition: all ease-in-out;
+    cursor: pointer;
 }
 
 .login-main .lg-side form button:active {
     transform: scale(0.98);
+}
+
+#Signup {
+    color: var(--light);
+    font-size: 10px;
+    color: #9c9c9c;
+}
+
+#Signup span {
+    color: var(--green);
+    cursor: pointer;
 }
 
 .user-main {
@@ -168,12 +180,11 @@ body {
 .user-main header {
     margin: 0px auto;
     display: flex;
-    margin-top: 40px;
+    margin-top: 30px;
     flex-direction: column;
     align-items: center;
     gap: 12px;
     padding-bottom: 20px;
-    box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.75);
 }
 
 .user-main header h1 {
@@ -196,7 +207,7 @@ body {
 }
 
 .user-main .user-table {
-    height: 73%;
+    max-height: 73%;
     color: var(--light);
     display: grid;
     place-items: center;
@@ -213,9 +224,13 @@ body {
 }
 
 .user-main .user-table thead {
+    position: sticky;
+    top: 0;
     background-color: var(--green);
     color: var(--dark);
     font-weight: 600;
+    box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.75);
+    z-index: 6;
 }
 
 .user-main .user-table td {
@@ -264,9 +279,16 @@ body {
 
 }
 
-.user-main .user-table tbody tr:last-of-type {
+/* .user-main .user-table tbody tr:last-of-type {
     border-bottom: 3px solid var(--green);
-
+} */
+#table-border {
+    position: sticky;
+    bottom: 0;
+    margin: 0 auto;
+    height: 3px;
+    width: 90%;
+    background-color: var(--green);
 }
 
 .modal-bg {
@@ -441,7 +463,7 @@ body {
     padding: 10px;
     display: grid;
     grid-template-columns: 20% 75%;
-    gap: 15px;
+    gap: 10px;
     align-items: center;
     cursor: pointer;
 }
@@ -451,9 +473,9 @@ body {
 }
 
 .dp-list .dp img {
-    padding: 3px;
-    width: 40px;
-    height: 40px;
+    padding: 2px;
+    width: 35px;
+    height: 35px;
     border: 2px solid var(--blue);
     border-radius: 100%;
 }
@@ -466,7 +488,7 @@ body {
 
 .dp-list .dp .title p {
     color: #a1a1a1;
-    font-size: 10px;
+    font-size: 9px;
 }
 
 .dp-list .dp .title .msg {
@@ -690,6 +712,12 @@ body {
         display: none;
     }
 
+    .dp-list .dp img {
+        padding: 2px !important;
+        width: 35px !important;
+        height: 35px !important;
+    }
+
     .modal form {
         width: 250px;
     }
@@ -707,8 +735,10 @@ body {
     }
 }
 
+
+
 /* Min width 850 */
-@media screen and (max-width: 850px) {
+@media screen and ( max-width: 850px ) {
     .login-main .sm-side {
         display: none;
     }
@@ -749,6 +779,12 @@ body {
 
         }
 
+        .dp-list .dp img {
+            padding: 3px;
+            width: 40px;
+            height: 40px;
+        }
+
         .dp-list .dp .title {
             display: none;
         }
@@ -765,6 +801,7 @@ body {
         }
     }
 }
+
 
 .error {
     margin: 8px;

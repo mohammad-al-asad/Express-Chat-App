@@ -118,6 +118,29 @@ async function createConversation(req, res, next) {
   }
 }
 
+async function deleteConversation(req, res, next) {
+  try {
+    const conversationId = req.params.conversationId;
+
+    await conversationModel.deleteOne({
+      _id:conversationId
+    });
+
+      res.status(200).json({
+        message: "Conversation deleted succesfully",
+      });
+
+  } catch (err) {
+    res.status(500).json({
+      errors: {
+        common: {
+          msg: err.message,
+        },
+      },
+    });
+  }
+}
+
 async function sendMessage(req, res, next) {
   try {
     const messages = await messageModel
@@ -221,6 +244,7 @@ module.exports = {
   getInbox,
   searchUsers,
   createConversation,
+  deleteConversation,
   sendMessage,
   getMessage,
 };

@@ -3,6 +3,7 @@ const {
   getInbox,
   searchUsers,
   createConversation,
+  deleteConversation,
   sendMessage,
   getMessage,
 } = require("../controllers/inboxController");
@@ -15,6 +16,7 @@ const router = express.Router();
 router.get("/", decorateHtml("Inbox"), checkLogin, getInbox);
 router.post("/search", checkLogin, searchUsers);
 router.post("/conversation", checkLogin, createConversation);
+router.delete("/conversation/:conversationId", checkLogin, deleteConversation);
 router.get("/messages/:conversationId", checkLogin, sendMessage);
 
 router.post("/message", checkLogin, attachmentUploader, getMessage);

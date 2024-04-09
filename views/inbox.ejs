@@ -99,7 +99,7 @@
         <form id="msg-form">
           <label for="attachment"><img src="./images/attachment.png" alt="Files" /></label>
           <input type="file" multiple name="attachment" class="hide" id="attachment">
-          <input id="send-msg" type="text" name="message" placeholder="Type a message" />
+          <input id="send-msg" autocomplete="off" type="text" name="message" placeholder="Type a message" />
           <button id="submitMsg" type="submit"><img src="./images/send.png" alt=""></button>
         </form>
       </div>
@@ -118,7 +118,6 @@
       
       // Socket
       const socket = io('<%= process.env.APP_URL %>');
-
       socket.on("new_message", (data)=>{
         
         const message = data.message;
@@ -156,8 +155,7 @@
       }
     })
 
-
-    // Get messages
+      // Get messages
       async function getMessages(conversationId, conversationName){
         openedConversationId = conversationId;
         msgBody.innerHTML = ""
@@ -205,7 +203,7 @@
         if(!result.errors&&result.participant){
           msgHead.innerHTML = `
           <h2 >${conversationName}</h2>
-        <img src="./images/trash.png" alt="Delete" onclick="deleteConvesation(${conversationId})"/>
+        <img src="./images/trash.png" alt="Delete" onclick="deleteConvesation('${conversationId}')"/>
           `;
 
           form.style.visibility ="visible";
@@ -253,6 +251,33 @@
             messageSendFailureToast.showToast();
           }
         }
+      }
+
+      // Delete conversation 
+      async function deleteConvesation(conversationId){
+
+        const response = await fetch(`/inbox/conversation/${conversationId}`,{
+          method:"DELETE"
+        })
+
+        const result = await response.json();
+
+        if(!result.errors && result.message){
+          const deleteToast = Toastify({
+              text:result.message,
+              duration:1500
+            })
+            deleteToast.showToast();
+            setTimeout(()=>{
+              location.reload()
+            },1000)
+        }else{
+          const deleteFailureToast = Toastify({
+              text:result.errors.common.msg,
+              duration:1000
+            })
+            deleteFailureToast.showToast();
+          }
       }
   
     </script>

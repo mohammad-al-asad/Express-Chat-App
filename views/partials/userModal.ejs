@@ -13,30 +13,28 @@
         action="/user"
         enctype="multipart/form-data"
       >
-        <input class="" placeholder="Enter your Name" type="" name="name" />
+        <input placeholder="Enter your Name" type="" name="name" />
         <p class="error name-error"></p>
         <input
-          class=""
           placeholder="Enter your Email"
           type="email"
           name="email"
         />
         <p class="error email-error"></p>
         <input
-          class=""
+        id="number"
           placeholder="Enter your Number"
           type="text"
           name="number"
         />
         <p class="error number-error"></p>
         <input
-          class=""
           placeholder="Enter your Password"
           type="password"
           name="password"
         />
         <p class="error password-error"></p>
-        <input class="" type="file" name="avatar" />
+        <input  type="file" name="avatar" />
         <p class="error avatar-error"></p>
 
         <p class="error common-error"></p>
@@ -48,10 +46,15 @@
 <script>
   const modal = document.getElementById("modal-bg");
   const form = document.getElementById("add-user-form");
+  const number = document.getElementById("number");
+  number.addEventListener("click",()=>{
+      number.value = "+88"
+    })
+
 
   const successTost = Toastify({
-    text: "User was added successfully! Reloading the list...",
-    duration: 1500,
+    text: "User was added successfully!",
+    duration: 1000,
   });
 
   const closeModal = function () {
@@ -101,7 +104,8 @@
 
       setTimeout(() => {
         location.reload();
-      }, 1500);
+      }, 1000);
     }
   };
+  
 </script>

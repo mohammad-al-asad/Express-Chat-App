@@ -9,7 +9,7 @@ const {checkLogin} = require("../middlewaers/common/checkLogin");
 const router = express.Router();
 
 router.get("/",decorateHtml("User"),checkLogin, getUser);
-router.delete("/:id", removeUser);
-router.post("/", checkLogin, avaterUploader, addValidators, addValidatorsHandler, addUser);
+router.delete("/:id", checkLogin, removeUser);
+router.post("/", avaterUploader, addValidators, addValidatorsHandler, addUser);
 
 module.exports = router;

@@ -75,7 +75,6 @@
       body: JSON.stringify({
         user: input.value,
       }),
-
       headers: {
         "content-type": "application/json",
       },
@@ -130,10 +129,9 @@
       const result = await response.json();
 
       if (!result.errors) {
-        setInterval(() => {
-          console.log("jhjsdh");
+        setTimeout(() => {
           location.reload();
-        }, 1500);
+        }, 1000);
       } else {
         throw new Error(result.errors.common.msg);
       }
@@ -145,6 +143,4 @@
       conversationFailureToast.showToast();
     }
   }
-
-
 </script>

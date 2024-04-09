@@ -2,6 +2,7 @@ const { hash } = require("bcrypt");
 const model = require("../model/people");
 const fs = require("fs");
 const path = require("path");
+const createError = require("http-errors")
 
 async function getUser(req, res, next) {
   try {
@@ -45,34 +46,38 @@ async function addUser(req, res, next) {
 
 async function removeUser(req, res, next) {
   try {
-    const user = await model.findByIdAndDelete({
-      _id: req.params.id,
-    });
-
-    if (user.avatar) {
-      fs.unlink(
-        path.join(`${__dirname}/../public/uploads/avatars/${user.avatar}`),
-        (err) => {
-          if (err) {
-            console.log(err.message);
+    if (req.loggedInUser.role === "admin") {
+      const user = await model.findByIdAndDelete({
+        _id: req.params.id,
+      });
+      
+      if (user.avatar) {
+        fs.unlink(
+          path.join(`${__dirname}/../public/uploads/avatars/${user.avatar}`),
+          (err) => {
+            if (err) {
+              console.log(err.message);
+            }
           }
-        }
-      );
-    }
-
-    res.status(200).json({
-      message: "User was deleted succesfully",
-    });
-  } catch {
-    errors: {
-      common: {
-        msg: "Could not delete the user!";
+        );
       }
+      
+      res.status(200).json({
+        message: "User was deleted succesfully",
+      });
+    }else{
+      throw createError("Only Admin can delete user!");
     }
+  } catch(err) {
+    res.status(403).json({
+      errors: {
+        common: {
+          msg: err.message
+        }
+      }
+    })
   }
 }
-
-
 
 module.exports = {
   getUser,
