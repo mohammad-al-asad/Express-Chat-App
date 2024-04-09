@@ -13,6 +13,7 @@
           placeholder="Search user by name / email / mobile"
           type="text"
           name="name"
+          autocomplete="off"
         />
         <p class="error"></p>
 
@@ -130,15 +131,16 @@
 
       if (!result.errors) {
         setInterval(() => {
+          console.log("jhjsdh");
           location.reload();
-        }, 1000);
+        }, 1500);
       } else {
         throw new Error(result.errors.common.msg);
       }
     } catch (err) {
       conversationFailureToast = Toastify({
         text: err.message,
-        duration: 2000,
+        duration: 1500,
       });
       conversationFailureToast.showToast();
     }

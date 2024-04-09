@@ -26,8 +26,8 @@
     <% } %>
     <script>
       const toast = Toastify({
-        text: "You are being logged out",
-        duration: 3000,
+        text: "You are being logged out..",
+        duration: 1500,
       });
 
       const logout = function () {
@@ -35,10 +35,9 @@
           method: "DELETE",
         });
         toast.showToast();
-        console.log("ishduk");
         setTimeout(()=>{
           window.location.replace("/")
-        },1000)
+        },1500)
       };
     </script>
   </body>

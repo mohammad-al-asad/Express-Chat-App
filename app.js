@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+const http = require("http");
+const { Server } = require("socket.io");
 
 // Internal imports
 const {
@@ -17,16 +19,21 @@ const loginRouter = require("./routes/loginRouter");
 const app = express();
 dotenv.config();
 
+// Socket
+const server = http.createServer(app);
+
+const io = new Server(server);
+global.io = io;
 
 // Server connection
 mongoose
-.connect(process.env.DATABASE_CONNECTION_STRING)
-.then(() => {
-  console.log("Database connection successful");
-})
-.catch((err) => {
-  console.log(err);
-});
+  .connect(process.env.DATABASE_CONNECTION_STRING)
+  .then(() => {
+    console.log("Database connection successful");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Request parser
 app.use(express.json());
@@ -51,6 +58,6 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Listen server
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Server is running at http://localhost:${process.env.PORT}`);
 });

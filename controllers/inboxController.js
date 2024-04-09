@@ -4,6 +4,7 @@ const messageModel = require("../model/message");
 const escape = require("../utilities/escape");
 const createError = require("http-errors");
 const moment = require("moment");
+const socket = require("socket.io-client");
 
 async function getInbox(req, res, next) {
   try {
@@ -123,7 +124,7 @@ async function sendMessage(req, res, next) {
       .find({
         conversationId: req.params.conversationId,
       })
-      .sort("-createdAt");
+      .sort("-time");
 
     const { participant } = await conversationModel.findById({
       _id: req.params.conversationId,
@@ -149,6 +150,7 @@ async function sendMessage(req, res, next) {
 async function getMessage(req, res, next) {
   if (req.body.message || (req.files && req.files.length > 0)) {
     try {
+      // Store message to database
       const attachments = [];
       if (req.files && req.files.length > 0) {
         req.files.forEach((attachment) => {
@@ -175,6 +177,22 @@ async function getMessage(req, res, next) {
       });
 
       const result = await message.save();
+
+      // Emmit socket event
+      global.io.emit("new_message", {
+        message: {
+          conversationId: req.body.conversationId,
+          text: req.body.message,
+          time: result.time,
+          attachment: attachments,
+          sender: {
+            name: req.loggedInUser.name,
+            id: req.loggedInUser.id,
+            avatar: req.loggedInUser.avatar || null,
+          },
+        },
+      });
+
       res.status(200).json({
         message: "Message sent",
         data: result,
