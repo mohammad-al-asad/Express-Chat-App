@@ -2,7 +2,7 @@
 
     <div class="inbox-main">
       <div class="search">
-        <input type="text" placeholder="Search" />
+        <input id="convesationInput" type="text" placeholder="Search" />
       </div>
 
       <div class="msg-head" id="msg-head">
@@ -105,7 +105,7 @@
       </div>
     </div>
     <%- include("./partials/inboxModal.ejs") %>
-    <!-- <script src="/socket.io/socket.io.js"></script> -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.min.js"></script>
 
     <script>
@@ -113,8 +113,8 @@
       const msgInput = document.getElementById("send-msg")
       const msgHead = document.getElementById("msg-head")
       const msgBody = document.querySelector(".msg-body")
-      let openedConversationId;
       const loggedInUser = '<%= loggedInUser.id %>';
+      let openedConversationId;
       
       // Socket
       const socket = io('<%= process.env.APP_URL %>');

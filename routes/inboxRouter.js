@@ -18,7 +18,6 @@ router.post("/search", checkLogin, searchUsers);
 router.post("/conversation", checkLogin, createConversation);
 router.delete("/conversation/:conversationId", checkLogin, deleteConversation);
 router.get("/messages/:conversationId", checkLogin, sendMessage);
-
 router.post("/message", checkLogin, attachmentUploader, getMessage);
 
 module.exports = router;

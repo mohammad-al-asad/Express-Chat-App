@@ -4,7 +4,6 @@ const messageModel = require("../model/message");
 const escape = require("../utilities/escape");
 const createError = require("http-errors");
 const moment = require("moment");
-const socket = require("socket.io-client");
 
 async function getInbox(req, res, next) {
   try {
@@ -123,13 +122,12 @@ async function deleteConversation(req, res, next) {
     const conversationId = req.params.conversationId;
 
     await conversationModel.deleteOne({
-      _id:conversationId
+      _id: conversationId,
     });
 
-      res.status(200).json({
-        message: "Conversation deleted succesfully",
-      });
-
+    res.status(200).json({
+      message: "Conversation deleted succesfully",
+    });
   } catch (err) {
     res.status(500).json({
       errors: {
