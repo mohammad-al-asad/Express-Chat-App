@@ -27,7 +27,9 @@ global.io = io;
 
 // Server connection
 mongoose
-  .connect(process.env.DATABASE_CONNECTION_STRING)
+  .connect(
+    "mongodb+srv://maasad:maasad@cluster0.unaalto.mongodb.net/chat?retryWrites=true&w=majority&appName=Cluster0"
+  )
   .then(() => {
     console.log("Database connection successful");
   })

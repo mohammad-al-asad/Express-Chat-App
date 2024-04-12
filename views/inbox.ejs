@@ -10,58 +10,58 @@
 
       <div class="dp-list">
 
-        <% if(conversations && conversations.length===0){ %>
-        <div class="no-conversation">
-          <img src="./images/no-conversation (1).svg" alt="No conversation">
-        </div>
-        <% }else{ %>
-        <% conversations.forEach(function(conversation){ %>
-        <% if(conversation.creator.id==loggedInUser.id){ %>
-
-        <!-- <div class="dp active">
-          <img src="./images/user1.png" alt="Asad" />
-          <div class="title">
-            <div class="name">
-              <h4>M.A. Asad</h4>
-              <p>Mar 14</p>
-            </div>
-            <p class="msg">This is message</p>
+        <% if(data && data.length===0){ %>
+          <div class="no-conversation">
+            <img src="./images/no-conversation (1).svg" alt="No conversation">
           </div>
-        </div> -->
-
-        <div class="dp" onclick="getMessages('<%= conversation._id %>', '<%= conversation.participant.name %>')">
-          <% if(conversation.participant.avatar){ %>
-          <img src="<%= conversation.participant.avatar %>" alt="<%= conversation.participant.name %>" />
           <% }else{ %>
-          <img src="./images/nophoto.png" alt="<%= conversation.participant.name %>" />
-          <% } %>
+            <% data.forEach(function(conversation){ %>
+            <% if(conversation.creator.id==loggedInUser.id){ %>
 
-          <div class="title">
-            <div class="name">
-              <h4><%= conversation.participant.name %></h4>
-              <p><%= moment(conversation.lastUpdated).fromNow() %></p>
-            </div>
-            <p class="msg">Click to see messages</p>
-          </div>
-        </div>
-
-        <% }else{ %>
-
-          <div class="dp" onclick="getMessages('<%= conversation._id %>', '<%= conversation.creator.name %>')">
-            <% if(conversation.creator.avatar){ %>
-            <img src="./uploads/avatars/<%= conversation.creator.avatar %>" alt="<%= conversation.creator.name %>" />
-            <% }else{ %>
-            <img src="./images/nophoto.png" alt="<%= conversation.creator.name %>" />
-            <% } %>
-  
+          <!-- <div class="dp active">
+            <img src="./images/user1.png" alt="Asad" />
             <div class="title">
               <div class="name">
-                <h4><%= conversation.creator.name %></h4>
+                <h4>M.A. Asad</h4>
+                <p>Mar 14</p>
+              </div>
+              <p class="msg">This is message</p>
+            </div>
+          </div> -->
+
+          <div class="dp" onclick="getMessages('<%= conversation._id %>', '<%= conversation.participant.name %>')">
+            <% if(conversation.participant.avatar){ %>
+            <img src="<%= conversation.participant.avatar %>" alt="<%= conversation.participant.name %>" />
+            <% }else{ %>
+            <img src="./images/nophoto.png" alt="<%= conversation.participant.name %>" />
+            <% } %>
+
+            <div class="title">
+              <div class="name">
+                <h4><%= conversation.participant.name %></h4>
                 <p><%= moment(conversation.lastUpdated).fromNow() %></p>
               </div>
               <p class="msg">Click to see messages</p>
             </div>
           </div>
+
+          <% }else{ %>
+
+            <div class="dp" onclick="getMessages('<%= conversation._id %>', '<%= conversation.creator.name %>')">
+              <% if(conversation.creator.avatar){ %>
+              <img src="./uploads/avatars/<%= conversation.creator.avatar %>" alt="<%= conversation.creator.name %>" />
+              <% }else{ %>
+              <img src="./images/nophoto.png" alt="<%= conversation.creator.name %>" />
+              <% } %>
+    
+              <div class="title">
+                <div class="name">
+                  <h4><%= conversation.creator.name %></h4>
+                  <p><%= moment(conversation.lastUpdated).fromNow() %></p>
+                </div>
+                <p class="msg">Click to see messages</p>
+              </div>
+            </div>
 
         <% } %>
           <% }) %>
