@@ -11,7 +11,7 @@
 
         <form action="/" method="post">
           <div class="input">
-            <input placeholder="Enter your username" type="text" name="username" value="<%= data.username %>" />
+            <input placeholder="Enter your email / number" type="text" name="username" value="<%= data.username %>" />
             <% if(errors.username){%>
             <p class="error"><%= errors.username.msg %></p>
             <% } %>

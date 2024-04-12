@@ -10,7 +10,7 @@
       <form id="add-conversation-form">
         <input
           id="input"
-          placeholder="Search user by name / email / mobile"
+          placeholder="Search name / email / mobile"
           type="text"
           name="name"
           autocomplete="off"
@@ -97,7 +97,7 @@
           generatedHtml += `<li onclick="createConversation('${user._id}', '${user.name}',' ${avatar}')">
               <div class="user">
                 <div class="img">
-                  <img width="100%" src="${avatar}" alt="DP" />
+                  <img width="100%" src="${avatar}"/>
                 </div>
                 <h1 class="name">${user.name}</h1>
               </div>

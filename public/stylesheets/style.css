@@ -336,8 +336,8 @@ body {
     border-radius: 100%;
     background-color: var(--light);
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -11px;
+    right: -11px;
     cursor: pointer;
 }
 
@@ -707,6 +707,18 @@ body {
 /* Min width 650 */
 @media screen and (max-width: 650px) {
 
+    .login-main {
+        min-width: 905%;
+    }
+
+    .user-main {
+        min-width: 90%;
+    }
+
+    .inbox-main {
+        min-width: 90%;
+    }
+
     .user-main .user-table tbody tr td:nth-child(2),
     .user-main .user-table thead tr td:nth-child(2) {
         display: none;
@@ -720,6 +732,11 @@ body {
 
     .modal form {
         width: 250px;
+    }
+
+    .search-users {
+        width: 250px;
+        right: 22px;
     }
 
     .modal {
@@ -738,7 +755,7 @@ body {
 
 
 /* Min width 850 */
-@media screen and ( max-width: 850px ) {
+@media screen and (max-width: 850px) {
     .login-main .sm-side {
         display: none;
     }
@@ -750,55 +767,55 @@ body {
 
     .login-main {
         justify-content: center;
-        min-width: 75%;
+        min-width: 85%;
     }
 
     .user-main {
         justify-content: center;
-        min-width: 75%;
+        min-width: 85%;
     }
 
     .inbox-main {
         justify-content: center;
-        min-width: 75%;
+        min-width: 85%;
         grid-template-columns: 17% 83%;
         grid-template-rows: 9% 1fr 9%;
+    }
 
-        .dp-list {
-            align-items: center;
-        }
+    .dp-list {
+        align-items: center;
+    }
 
-        .dp-list .no-conversation {
-            display: none;
-        }
+    .dp-list .no-conversation {
+        display: none;
+    }
 
-        .dp-list .dp {
-            gap: 0px;
-            display: block;
-            text-align: center;
+    .dp-list .dp {
+        gap: 0px;
+        display: block;
+        text-align: center;
 
-        }
+    }
 
-        .dp-list .dp img {
-            padding: 3px;
-            width: 40px;
-            height: 40px;
-        }
+    .dp-list .dp img {
+        padding: 3px;
+        width: 40px;
+        height: 40px;
+    }
 
-        .dp-list .dp .title {
-            display: none;
-        }
+    .dp-list .dp .title {
+        display: none;
+    }
 
-        .nothing {
-            justify-content: center;
-            padding: 15px 10px;
-        }
+    .nothing {
+        justify-content: center;
+        padding: 15px 10px;
+    }
 
-        .search input {
-            width: 0;
-            padding: 20px;
-            border-radius: 10px;
-        }
+    .search input {
+        width: 0;
+        padding: 20px;
+        border-radius: 10px;
     }
 }
 
