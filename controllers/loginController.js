@@ -36,8 +36,8 @@ async function login(req, res, next) {
           httpOnly: true,
           signed: true,
         });
-
         res.locals.loggedInUser = userObj;
+        console.log("inbox");
         res.render("inbox");
       } else {
         throw createError("Login failed! Please try again.");
@@ -46,6 +46,7 @@ async function login(req, res, next) {
       throw createError("Login failed! Please try again.");
     }
   } catch (err) {
+    console.log(err.message);
     res.render("login", {
       data: {
         username: req.body.username,
