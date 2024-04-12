@@ -7,7 +7,7 @@ function checkLogin(req, res, next) {
     console.log("secret: "+process.env.JWT_SECRET);
   if (cookies) {
     try {
-      const cookie = cookies[process.env.COOkIE_NAME];
+      const cookie = cookies[process.env.COOKIE_NAME];
 
       const decoded = jwt.verify(cookie, process.env.JWT_SECRET);
       req.loggedInUser = decoded;
