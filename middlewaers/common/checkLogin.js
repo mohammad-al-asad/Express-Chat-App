@@ -15,6 +15,7 @@ function checkLogin(req, res, next) {
       }
       next();
     } catch (err) {
+      console.log(err.message);
       if (res.locals.html) {
         res.redirect("/");
       } else {
