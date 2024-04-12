@@ -545,6 +545,7 @@ body {
 
 .msg-body .others-msg .message-box {
     word-break: break-all;
+    /* width: min-content; */
 }
 
 .msg-body .message-box .date {
@@ -563,7 +564,7 @@ body {
     grid-column-gap: 10px;
     place-items: center;
     justify-items: left;
-    width: 40%;
+    width: fit-content;
     grid-template-columns: 30px 1fr;
 }
 
@@ -708,15 +709,15 @@ body {
 @media screen and (max-width: 650px) {
 
     .login-main {
-        min-width: 905%;
+        min-width: 95% !important;
     }
 
     .user-main {
-        min-width: 90%;
+        min-width: 95% !important;
     }
 
     .inbox-main {
-        min-width: 90%;
+        min-width: 95% !important;
     }
 
     .user-main .user-table tbody tr td:nth-child(2),

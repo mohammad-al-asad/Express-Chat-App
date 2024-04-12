@@ -31,9 +31,9 @@
 
           <div class="dp" onclick="getMessages('<%= conversation._id %>', '<%= conversation.participant.name %>')">
             <% if(conversation.participant.avatar){ %>
-            <img src="<%= conversation.participant.avatar %>" alt="<%= conversation.participant.name %>" />
+            <img src="<%= conversation.participant.avatar %>"/>
             <% }else{ %>
-            <img src="./images/nophoto.png" alt="<%= conversation.participant.name %>" />
+            <img src="./images/nophoto.png" />
             <% } %>
 
             <div class="title">
@@ -49,7 +49,7 @@
 
             <div class="dp" onclick="getMessages('<%= conversation._id %>', '<%= conversation.creator.name %>')">
               <% if(conversation.creator.avatar){ %>
-              <img src="./uploads/avatars/<%= conversation.creator.avatar %>" alt="<%= conversation.creator.name %>" />
+              <img src="./uploads/avatars/<%= conversation.creator.avatar %>"/>
               <% }else{ %>
               <img src="./images/nophoto.png" alt="<%= conversation.creator.name %>" />
               <% } %>
