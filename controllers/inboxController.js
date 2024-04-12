@@ -17,7 +17,6 @@ async function getInbox(req, res, next) {
         },
       ],
     });
-
     res.render("inbox", {
       data:conversations,
       moment: moment,
