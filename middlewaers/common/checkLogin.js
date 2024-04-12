@@ -3,8 +3,6 @@ const jwt = require("jsonwebtoken");
 function checkLogin(req, res, next) {
   const cookies =
     Object.keys(req.signedCookies).length > 0 ? req.signedCookies : null;
-    console.log(cookies[process.env.COOkIE_NAME]);
-    console.log("secret: "+process.env.JWT_SECRET);
   if (cookies) {
     try {
       const cookie = cookies[process.env.COOKIE_NAME];
@@ -14,11 +12,9 @@ function checkLogin(req, res, next) {
 
       if (res.locals.html) {
         res.locals.loggedInUser = decoded;
-        console.log("user: "+decoded);
       }
       next();
     } catch (err) {
-      console.log("err: "+err);
       if (res.locals.html) {
         res.redirect("/");
       } else {
